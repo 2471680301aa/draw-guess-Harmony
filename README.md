@@ -1,5 +1,5 @@
 # draw-guess-Harmony插件
-基于Harmony开发的游戏插件。  
+基于Harmony开发的Draw&Guess插件。  
 开发环境为类库(.NET Framework)  
 目标框架(.NET Framework 4.8)
 需要用到的软件：  

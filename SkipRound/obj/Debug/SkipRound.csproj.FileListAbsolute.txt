@@ -1,0 +1,15 @@
+C:\Users\qzq\source\repos\SkipRound\obj\Debug\SkipRound.csproj.AssemblyReference.cache
+C:\Users\qzq\source\repos\SkipRound\obj\Debug\SkipRound.csproj.CoreCompileInputs.cache
+C:\Users\qzq\source\repos\SkipRound\bin\Debug\SkipRound.dll
+C:\Users\qzq\source\repos\SkipRound\bin\Debug\SkipRound.pdb
+C:\Users\qzq\source\repos\SkipRound\obj\Debug\SkipRound.dll
+C:\Users\qzq\source\repos\SkipRound\obj\Debug\SkipRound.pdb
+E:\BaiduSyncdisk\repos\SkipRound\obj\Debug\SkipRound.csproj.AssemblyReference.cache
+E:\BaiduSyncdisk\repos\SkipRound\obj\Debug\SkipRound.csproj.CoreCompileInputs.cache
+E:\BaiduSyncdisk\repos\SkipRound\obj\Debug\SkipRound.dll
+E:\BaiduSyncdisk\repos\SkipRound\obj\Debug\SkipRound.pdb
+E:\BaiduSyncdisk\repos\SkipRound\bin\Debug\SkipRound.dll
+E:\BaiduSyncdisk\repos\SkipRound\bin\Debug\SkipRound.pdb
+E:\BaiduSyncdisk\repos\SkipRound\bin\Debug\Unity.InputSystem.dll
+E:\BaiduSyncdisk\repos\SkipRound\bin\Debug\UnityEngine.UI.dll
+E:\BaiduSyncdisk\repos\SkipRound\obj\Debug\SkipRound.csproj.Up2Date

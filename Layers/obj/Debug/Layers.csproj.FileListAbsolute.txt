@@ -1,0 +1,6 @@
+G:\开发\Layers\bin\Debug\Layers.dll
+G:\开发\Layers\bin\Debug\Layers.pdb
+G:\开发\Layers\obj\Debug\Layers.csproj.AssemblyReference.cache
+G:\开发\Layers\obj\Debug\Layers.csproj.CoreCompileInputs.cache
+G:\开发\Layers\obj\Debug\Layers.dll
+G:\开发\Layers\obj\Debug\Layers.pdb

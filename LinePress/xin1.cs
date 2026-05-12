@@ -406,10 +406,10 @@ internal static class ReflectionCache
     public static readonly FieldInfo fld_ShapeInProgress = AccessTools.DeclaredField(typeof(DrawModule), "ShapeInProgress");
     public static readonly FieldInfo fld_LineInProgress = AccessTools.DeclaredField(typeof(DrawModule), "LineInProgress");
 
-    // 图层设置（如果API没有提供的话）
+    // 图层设置
     public static readonly PropertyInfo prop_SelectedLayer = AccessTools.DeclaredProperty(typeof(DrawModule), "SelectedLayer");
 
-    // 委托缓存（只保留必要的）
+    // 委托缓存
     private static Action<DrawModule, int> _setSelectedLayerDelegate;
 
     #endregion

@@ -9,7 +9,7 @@ namespace DrawModuleLib
 {
     public static class DrawModuleAPI
     {
-        #region 内部委托 - 简化为构建器模式
+        #region 内部委托 
 
         internal static BuilderDelegate onDrawModuleReadyDelegate;
 
@@ -17,11 +17,8 @@ namespace DrawModuleLib
 
         #endregion
 
-        #region 注���方法
+        #region 注方法
 
-        /// <summary>
-        /// 当 DrawModule 准备就绪时执行回调
-        /// </summary>
         public static void OnDrawModuleReady(BuilderDelegate builderDelegate) =>
             onDrawModuleReadyDelegate += builderDelegate;
 
@@ -29,59 +26,45 @@ namespace DrawModuleLib
 
         #region 工具方法 API
 
-        /// <summary>
         /// 获取当前 DrawModule 实例
-        /// </summary>
         public static DrawModule GetCurrentDrawModule() => DrawModule.DrawModuleInstance;
 
-        /// <summary>
         /// 检查是否可以绘图
-        /// </summary>
         public static bool CanDraw()
         {
             var drawModule = GetCurrentDrawModule();
             return drawModule != null && drawModule.CanDraw();
         }
 
-        /// <summary>
         /// 获取当前激活的工具
-        /// </summary>
         public static DrawModule.DrawTool GetActiveTool()
         {
             var drawModule = GetCurrentDrawModule();
             return drawModule?.ActiveDrawTool ?? DrawModule.DrawTool.Brush;
         }
 
-        /// <summary>
         /// 切换工具
-        /// </summary>
         public static void SwitchTool(DrawModule.DrawTool tool, bool force = false)
         {
             var drawModule = GetCurrentDrawModule();
             drawModule?.ActivateTool(tool, force, true);
         }
 
-        /// <summary>
         /// 获取当前颜色
-        /// </summary>
         public static Color GetCurrentColor()
         {
             var drawModule = GetCurrentDrawModule();
             return drawModule != null ? DrawModuleReflection.GetRGBColor(drawModule) : Color.black;
         }
 
-        /// <summary>
         /// 设置颜色
-        /// </summary>
         public static void SetColor(Color color, bool updatePicker = true, bool withSound = true)
         {
             var drawModule = GetCurrentDrawModule();
             drawModule?.SetRGBColor(color, updatePicker, false, false, withSound);
         }
 
-        /// <summary>
         /// 获取当前笔刷大小
-        /// </summary>
         public static int GetBrushSize()
         {
             try
@@ -106,9 +89,7 @@ namespace DrawModuleLib
         }
 
 
-        /// <summary>
         /// 设置笔刷大小
-        /// </summary>
         public static void SetBrushSize(int size)
         {
             try
@@ -141,108 +122,84 @@ namespace DrawModuleLib
         }
 
 
-        /// <summary>
         /// 执行撤销
-        /// </summary>
         public static void Undo()
         {
             var drawModule = GetCurrentDrawModule();
             drawModule?.Undo(DrawingToolTrigger.System);
         }
 
-        /// <summary>
         /// 执行重做
-        /// </summary>
         public static void Redo()
         {
             var drawModule = GetCurrentDrawModule();
             drawModule?.Redo(DrawingToolTrigger.System);
         }
 
-        /// <summary>
         /// 清除画布
-        /// </summary>
         public static void ClearCanvas()
         {
             var drawModule = GetCurrentDrawModule();
             drawModule?.ExecuteClear(DrawingToolTrigger.System, true, true);
         }
 
-        /// <summary>
         /// 获取所有已绘制的元素
-        /// </summary>
         public static List<DrawableElement> GetAllDrawnElements()
         {
             var drawModule = GetCurrentDrawModule();
             return drawModule?.GetMyDrawnElements() ?? new List<DrawableElement>();
         }
 
-        /// <summary>
         /// 获取绘图信息（用于导出）
-        /// </summary>
         public static List<LineInformation> GetDrawingInfo(bool finishActiveLines = true, bool normalize = false)
         {
             var drawModule = GetCurrentDrawModule();
             return drawModule?.GetDrawingAsLineInfo(finishActiveLines, normalize) ?? new List<LineInformation>();
         }
 
-        /// <summary>
         /// 检查是否有可撤销的操作
-        /// </summary>
         public static bool CanUndo()
         {
             var drawModule = GetCurrentDrawModule();
             return drawModule?.UndoSystem.CanUndo ?? false;
         }
 
-        /// <summary>
         /// 检查是否有可重做的操作
-        /// </summary>
         public static bool CanRedo()
         {
             var drawModule = GetCurrentDrawModule();
             return drawModule?.UndoSystem.CanRedo ?? false;
         }
 
-        /// <summary>
         /// 获取当前选中的图层
-        /// </summary>
         public static int GetSelectedLayer()
         {
             var drawModule = GetCurrentDrawModule();
             return drawModule?.SelectedLayer ?? 1;
         }
 
-        /// <summary>
         /// 检查是否已提交
-        /// </summary>
         public static bool HasSubmitted()
         {
             var drawModule = GetCurrentDrawModule();
             return drawModule?.HasSubmitted ?? false;
         }
 
-        /// <summary>
         /// 检查是否有自己绘制的线条
-        /// </summary>
         public static bool HasOwnLines()
         {
             var drawModule = GetCurrentDrawModule();
             return drawModule?.HasOwnLines ?? false;
         }
 
-        /// <summary>
         /// 获取特殊模式
-        /// </summary>
         public static GameSpecialMode GetSpecialMode()
         {
             var drawModule = GetCurrentDrawModule();
             return drawModule?.SpecialMode ?? GameSpecialMode.Weight;
         }
 
-        /// <summary>
         /// 检查是否是像素艺术模式
-        /// </summary>
         public static bool IsPixelArtMode()
         {
             var drawModule = GetCurrentDrawModule();
@@ -253,9 +210,7 @@ namespace DrawModuleLib
 
         #region 工厂方法 API - 创建绘图元素
 
-        /// <summary>
         /// 创建一条线
-        /// </summary>
         public static DrawableLine CreateLine(Vector2 startPosition, Color color, int brushSize, Transform parent = null)
         {
             var drawModule = GetCurrentDrawModule();
@@ -303,9 +258,7 @@ namespace DrawModuleLib
             return line;
         }
 
-        /// <summary>
         /// 创建一个形状
-        /// </summary>
         public static DrawableShape CreateShape(Vector2 position, Color color, int brushSize, Transform parent = null)
         {
             var drawModule = GetCurrentDrawModule();
@@ -353,9 +306,7 @@ namespace DrawModuleLib
             return shape;
         }
 
-        /// <summary>
         /// 创建一个圆点
-        /// </summary>
         public static DrawableDisc CreateDisc(Vector2 position, Color color, int brushSize, Transform parent = null)
         {
             var drawModule = GetCurrentDrawModule();
@@ -403,9 +354,7 @@ namespace DrawModuleLib
             return disc;
         }
 
-        /// <summary>
         /// 创建一个填充形状
-        /// </summary>
         public static DrawableShape CreateFillShape(Vector2 position, Color color, List<Vector2> points, Transform parent = null)
         {
             var shape = CreateShape(position, color, 1, parent);
@@ -426,9 +375,7 @@ namespace DrawModuleLib
 
         #region 批量操作 API
 
-        /// <summary>
         /// 批量删除元素
-        /// </summary>
         public static void DeleteElements(IEnumerable<DrawableElement> elements)
         {
             var drawModule = GetCurrentDrawModule();
@@ -440,9 +387,7 @@ namespace DrawModuleLib
             }
         }
 
-        /// <summary>
         /// 修改元素颜色
-        /// </summary>
         public static void ChangeElementColor(DrawableElement element, Color newColor)
         {
             if (element == null) return;
@@ -454,9 +399,7 @@ namespace DrawModuleLib
             drawModule?.OnSendUpdatePrecise(element, oldColor, newColor);
         }
 
-        /// <summary>
         /// 批量修改元素颜色
-        /// </summary>
         public static void ChangeElementsColor(IEnumerable<DrawableElement> elements, Color newColor)
         {
             foreach (var element in elements.Where(e => e != null))
@@ -469,9 +412,7 @@ namespace DrawModuleLib
 
         #region 内部方法 - 由 Entry 调用
 
-        /// <summary>
         /// 内部方法：触发 DrawModule 准备就绪事件
-        /// </summary>
         internal static void TriggerDrawModuleReady(DrawModule drawModule)
         {
             onDrawModuleReadyDelegate?.Invoke(drawModule);
@@ -480,45 +421,35 @@ namespace DrawModuleLib
 
         #region 内部状态管理 API
 
-        /// <summary>
         /// 获取正在绘制的线条
-        /// </summary>
         public static DrawableLine GetLineInProgress()
         {
             var drawModule = GetCurrentDrawModule();
             return DrawModuleReflection.GetLineInProgress(drawModule);
         }
 
-        /// <summary>
         /// 设置正在绘制的线条
-        /// </summary>
         public static void SetLineInProgress(DrawableLine line)
         {
             var drawModule = GetCurrentDrawModule();
             DrawModuleReflection.SetLineInProgress(drawModule, line);
         }
 
-        /// <summary>
         /// 获取正在绘制的形状
-        /// </summary>
         public static DrawableShape GetShapeInProgress()
         {
             var drawModule = GetCurrentDrawModule();
             return DrawModuleReflection.GetShapeInProgress(drawModule);
         }
 
-        /// <summary>
         /// 设置正在绘制的形状
-        /// </summary>
         public static void SetShapeInProgress(DrawableShape shape)
         {
             var drawModule = GetCurrentDrawModule();
             DrawModuleReflection.SetShapeInProgress(drawModule, shape);
         }
 
-        /// <summary>
         /// 清空所有进行中的绘制状态
-        /// </summary>
         public static void ClearInProgressStates()
         {
             var drawModule = GetCurrentDrawModule();
@@ -532,9 +463,7 @@ namespace DrawModuleLib
 
         #region 图层管理 API
 
-        /// <summary>
         /// 设置选中的图层
-        /// </summary>
         public static void SetSelectedLayer(int layer)
         {
             var drawModule = GetCurrentDrawModule();
@@ -545,9 +474,7 @@ namespace DrawModuleLib
             prop?.SetValue(drawModule, layer);
         }
 
-        /// <summary>
         /// 切换到指定图层
-        /// </summary>
         public static void SwitchToLayer(int layer)
         {
             SetSelectedLayer(layer);
@@ -557,18 +484,14 @@ namespace DrawModuleLib
 
         #region UI控制 API
 
-        /// <summary>
         /// 获取绘图工具中心组件
-        /// </summary>
         public static object GetDrawingToolHub()
         {
             var drawModule = GetCurrentDrawModule();
             return DrawModuleReflection.GetDrawingToolHub(drawModule);
         }
 
-        /// <summary>
         /// 设置橡皮擦按钮状态
-        /// </summary>
         public static void SetEraseButtonsState(bool enabled)
         {
             var drawModule = GetCurrentDrawModule();
@@ -588,9 +511,7 @@ namespace DrawModuleLib
             }
         }
 
-        /// <summary>
         /// 更新撤销按钮状态
-        /// </summary>
         public static void UpdateUndoButtons()
         {
             var drawModule = GetCurrentDrawModule();
@@ -610,9 +531,7 @@ namespace DrawModuleLib
             }
         }
 
-        /// <summary>
         /// 高亮指定的工具按钮
-        /// </summary>
         public static void HighlightToolButton(DrawModule.DrawTool tool)
         {
             var drawModule = GetCurrentDrawModule();
@@ -632,9 +551,7 @@ namespace DrawModuleLib
             }
         }
 
-        /// <summary>
         /// 更新颜色按钮显示
-        /// </summary>
         public static void UpdateColorButtons()
         {
             var drawModule = GetCurrentDrawModule();
@@ -658,9 +575,7 @@ namespace DrawModuleLib
 
         #region 高级绘图操作 API
 
-        /// <summary>
         /// 创建压感线段（专用于压感绘图）
-        /// </summary>
         public static DrawableShape CreatePressureSegment(Vector2 position, Color color, float brushSize, Transform parent = null)
         {
             var drawModule = GetCurrentDrawModule();
@@ -687,9 +602,7 @@ namespace DrawModuleLib
             return shape;
         }
 
-        /// <summary>
         /// 完成当前绘制操作
-        /// </summary>
         public static void FinishCurrentDrawing(DrawableElement drawable)
         {
             var drawModule = GetCurrentDrawModule();
@@ -715,9 +628,7 @@ namespace DrawModuleLib
             }
         }
 
-        /// <summary>
         /// 检查防抖器是否允许操作
-        /// </summary>
         public static bool CheckDebouncerAllowed()
         {
             var drawModule = GetCurrentDrawModule();
@@ -744,9 +655,7 @@ namespace DrawModuleLib
 
         #region 扩展的元素管理 API
 
-        /// <summary>
         /// 发送精确删除消息
-        /// </summary>
         public static void SendDeletePrecise(int elementId)
         {
             var drawModule = GetCurrentDrawModule();
@@ -763,9 +672,7 @@ namespace DrawModuleLib
             }
         }
 
-        /// <summary>
         /// 发送精确更新消息
-        /// </summary>
         public static void SendUpdatePrecise(DrawableElement element, Color oldColor, Color newColor)
         {
             var drawModule = GetCurrentDrawModule();
@@ -782,9 +689,7 @@ namespace DrawModuleLib
             }
         }
 
-        /// <summary>
         /// 创建多元素撤销操作
-        /// </summary>
         public static IUndo CreateMultiElementUndo(IEnumerable<DrawableElement> elements)
         {
             var drawModule = GetCurrentDrawModule();
@@ -793,9 +698,7 @@ namespace DrawModuleLib
             return new UndoMultiDrawElement(elements, drawModule);
         }
 
-        /// <summary>
         /// 添加撤销事件到撤销系统
-        /// </summary>
         public static void AddUndoEvent(IUndo undoEvent)
         {
             var drawModule = GetCurrentDrawModule();
@@ -808,9 +711,7 @@ namespace DrawModuleLib
         #endregion
         #region 元素高级操作 API (DrawableElement)
 
-        /// <summary>
         /// 强制更改元素的所有者 ID
-        /// </summary>
         public static void SetElementOwner(DrawableElement element, string newOwnerId)
         {
             if (element == null) return;
@@ -818,9 +719,7 @@ namespace DrawModuleLib
             element.ChangeOwner(newOwnerId);
         }
 
-        /// <summary>
         /// 启用或禁用元素的重力效果 (物理)
-        /// </summary>
         /// <returns>返回碰撞次数，如果不支持重力则返回 0</returns>
         public static int SetElementGravity(DrawableElement element, bool enabled)
         {
@@ -828,9 +727,7 @@ namespace DrawModuleLib
             return element.SetGravityEnabled(enabled);
         }
 
-        /// <summary>
         /// 初始化元素的重力状态
-        /// </summary>
         public static void InitElementGravity(DrawableElement element, bool enabled, bool newlyCreatedByOwner)
         {
             if (element == null) return;
@@ -844,9 +741,7 @@ namespace DrawModuleLib
             return element.ToLineInformation(false, normalize);
         }
 
-        /// <summary>
         /// 判断元素是否被标记为删除
-        /// </summary>
         public static bool IsElementDeleted(DrawableElement element)
         {
             return element != null && element.IsMarkedAsDeleted;
@@ -856,35 +751,27 @@ namespace DrawModuleLib
 
         #region 大逃杀模式专用 API (BattleRoyal)
 
-        /// <summary>
         /// 检查当前是否处于大逃杀绘图模式
-        /// </summary>
         public static bool IsBattleRoyalMode()
         {
             var module = GetCurrentDrawModule();
             return module is BattleRoyalDrawModule;
         }
 
-        /// <summary>
         /// 获取当前的大逃杀绘图模块实例
-        /// </summary>
         public static BattleRoyalDrawModule GetBattleRoyalModule()
         {
             return GetCurrentDrawModule() as BattleRoyalDrawModule;
         }
 
-        /// <summary>
         /// [大逃杀] 检查是否在大厅模式（等待中）
-        /// </summary>
         public static bool IsInLobbyMode()
         {
             var brModule = GetBattleRoyalModule();
             return brModule != null && brModule.InLobbyMode;
         }
 
-        /// <summary>
         /// [大逃杀] 强制返回大厅
-        /// </summary>
         public static void BackToLobby()
         {
             var brModule = GetBattleRoyalModule();
@@ -894,9 +781,7 @@ namespace DrawModuleLib
             brModule.BackToLobby();
         }
 
-        /// <summary>
         /// [大逃杀] 强制提交画作
-        /// </summary>
         public static void ForceSubmitBattleRoyal()
         {
             var brModule = GetBattleRoyalModule();
@@ -913,10 +798,8 @@ namespace DrawModuleLib
 
             #region 笔刷大小和 UI 辅助 API
 
-            /// <summary>
             /// 获取当前平台下的最大笔刷大小。
             /// 内部逻辑与 DrawModuleAPI.SetBrushSize 中的钳制逻辑保持一致。
-            /// </summary>
             public static int GetMaxAllowedBrushSize()
             {
                 // 假设 DrawModuleAPI 能够访问到 GlobalVars
@@ -926,9 +809,7 @@ namespace DrawModuleLib
                 return GlobalVars.IsMobile ? GlobalVars.MAX_BRUSH_SIZE_MOBILE : GlobalVars.MAX_BRUSH_SIZE;
             }
 
-            /// <summary>
             /// 获取当前平台是否为移动设备。
-            /// </summary>
             public static bool IsMobilePlatform()
             {
                 // 同样，假设可以访问 GlobalVars
@@ -973,10 +854,7 @@ namespace DrawModuleLib
 
         #endregion
         #endregion
-        // 在DrawModuleAPI文件中添加这个类
-        /// <summary>
         /// 多元素撤销操作
-        /// </summary>
         public class UndoMultiDrawElement : IUndo
         {
             private readonly List<DrawableElement> _elements;

@@ -75,9 +75,7 @@ namespace DrawModuleLib
         #endregion
         
 
-        /// <summary>
         /// 强制设置绘图元素的 ID (绕过 private set)
-        /// </summary>
         public static void SetElementIdent(DrawableElement element, int ident)
         {
             try
@@ -91,129 +89,98 @@ namespace DrawModuleLib
         }
         #region 辅助方法
 
-        /// <summary>
         /// 获取正在绘制的线条
-        /// </summary>
         public static DrawableLine GetLineInProgress(DrawModule drawModule)
         {
             return (DrawableLine)fld_LineInProgress?.GetValue(drawModule);
         }
 
-        /// <summary>
         /// 设置正在绘制的线条
-        /// </summary>
         public static void SetLineInProgress(DrawModule drawModule, DrawableLine line)
         {
             fld_LineInProgress?.SetValue(drawModule, line);
         }
 
-        /// <summary>
         /// 获取正在绘制的形状
-        /// </summary>
         public static DrawableShape GetShapeInProgress(DrawModule drawModule)
         {
             return (DrawableShape)fld_ShapeInProgress?.GetValue(drawModule);
         }
 
-        /// <summary>
         /// 设置正在绘制的形状
-        /// </summary>
         public static void SetShapeInProgress(DrawModule drawModule, DrawableShape shape)
         {
             fld_ShapeInProgress?.SetValue(drawModule, shape);
         }
 
-        /// <summary>
         /// 获取已创建的绘图元素列表
-        /// </summary>
         public static System.Collections.ObjectModel.ObservableCollection<DrawableElement> GetCreatedDrawablesByMe(DrawModule drawModule)
         {
             return (System.Collections.ObjectModel.ObservableCollection<DrawableElement>)fld_CreatedDrawablesByMe?.GetValue(drawModule);
         }
 
-        /// <summary>
         /// 获取当前 RGB 颜色
-        /// </summary>
         public static Color GetRGBColor(DrawModule drawModule)
         {
             return (Color)(fld_RGBColor?.GetValue(drawModule) ?? Color.black);
         }
 
-        /// <summary>
         /// 设置 RGB 颜色
-        /// </summary>
         public static void SetRGBColor(DrawModule drawModule, Color color)
         {
             fld_RGBColor?.SetValue(drawModule, color);
         }
 
-        /// <summary>
         /// 获取上一个点的位置
-        /// </summary>
+        
         public static Vector2 GetLastPos(DrawModule drawModule)
         {
             return (Vector2)(fld_LastPos?.GetValue(drawModule) ?? Vector2.zero);
         }
 
-        /// <summary>
         /// 获取本地 Playfab ID
-        /// </summary>
         public static string GetLocalPlayfabId(DrawModule drawModule)
         {
             return (string)prop_LocalPlayfabId?.GetValue(drawModule);
         }
 
-        /// <summary>
         /// 获取 LineParent Transform
-        /// </summary>
         public static Transform GetLineParent(DrawModule drawModule)
         {
             return (Transform)fld_LineParent?.GetValue(drawModule);
         }
 
-        /// <summary>
         /// 获取 DrawingToolHub
-        /// </summary>
         public static object GetDrawingToolHub(DrawModule drawModule)
         {
             return fld_DrawingToolHub?.GetValue(drawModule);
         }
 
-        /// <summary>
         /// 获取 DrawableSurface
-        /// </summary>
         public static DrawableSurface GetDrawableSurface(DrawModule drawModule)
         {
             return (DrawableSurface)fld_DrawableSurface?.GetValue(drawModule);
         }
 
-        /// <summary>
         /// 调用 SetEraseButtons
-        /// </summary>
         public static void InvokeSetEraseButtons(object hub, bool value)
         {
             meth_Hub_SetEraseButtons?.Invoke(hub, new object[] { value });
         }
 
-        /// <summary>
         /// 调用 SetUndoButtons
-        /// </summary>
         public static void InvokeSetUndoButtons(object hub)
         {
             meth_Hub_SetUndoButtons?.Invoke(hub, null);
         }
 
-        /// <summary>
         /// 获取 SortOrder
-        /// </summary>
         public static SortOrder GetSortOrder(DrawModule drawModule)
         {
             return drawModule?.SortOrder;  // 使用公共属性
         }
 
-        /// <summary>
         /// 安全获取字段值
-        /// </summary>
         public static T GetFieldValue<T>(object instance, FieldInfo field, T defaultValue = default(T))
         {
             try
@@ -226,9 +193,7 @@ namespace DrawModuleLib
             }
         }
 
-        /// <summary>
         /// 安全设置字段值
-        /// </summary>
         public static void SetFieldValue(object instance, FieldInfo field, object value)
         {
             try
@@ -241,9 +206,7 @@ namespace DrawModuleLib
             }
         }
 
-        /// <summary>
         /// 安全调用方法
-        /// </summary>
         public static T InvokeMethod<T>(object instance, MethodInfo method, params object[] parameters)
         {
             try

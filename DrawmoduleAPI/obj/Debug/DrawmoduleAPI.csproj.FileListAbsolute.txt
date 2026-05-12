@@ -1,0 +1,6 @@
+G:\开发\DrawmoduleAPI\obj\Debug\DrawmoduleAPI.csproj.AssemblyReference.cache
+G:\开发\DrawmoduleAPI\obj\Debug\DrawmoduleAPI.csproj.CoreCompileInputs.cache
+G:\开发\DrawmoduleAPI\bin\Debug\DrawmoduleAPI.dll
+G:\开发\DrawmoduleAPI\bin\Debug\DrawmoduleAPI.pdb
+G:\开发\DrawmoduleAPI\obj\Debug\DrawmoduleAPI.dll
+G:\开发\DrawmoduleAPI\obj\Debug\DrawmoduleAPI.pdb

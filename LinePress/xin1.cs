@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using HarmonyLib; // 保留用于AccessTools
+using HarmonyLib;
 using MonoMod.RuntimeDetour;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -67,13 +67,13 @@ public static class IngameDrawModuleLayerUIExtensions
     // 在 IngameDrawModuleLayerUIExtensions 中
     private static int ReadSelectedLayer(this IngameDrawModule self)
     {
-        // 直接使用 API 而不是反射
+        
         return DrawModuleAPI.GetSelectedLayer();
     }
 
     private static void WriteSelectedLayer(this IngameDrawModule self, int val)
     {
-        // 使用 API 设置图层
+        
         DrawModuleAPI.SetSelectedLayer(val);
     }
     private static readonly ConditionalWeakTable<IngameDrawModule, IngameDrawModuleLayerUIExt> data =
@@ -263,9 +263,9 @@ public static class DrawModulePressurePatch
 
     public static PressureModuleState GetState(DrawModule inst) => States.GetOrCreateValue(inst);
 
-    /// <summary>
+   
     /// 创建新的压感线条
-    /// </summary>
+    
     public static void CreateNewPressureLine(DrawModule module)
     {
         var state = GetState(module);
@@ -285,9 +285,9 @@ public static class DrawModulePressurePatch
         state.isLineInDrawing = true;
     }
 
-    /// <summary>
+    
     /// 创建压感线段 - 使用 DrawModuleAPI
-    /// </summary>
+    
     public static DrawableShape CreateNewPressureSegment(this DrawModule drawModule, Vector2 startPoint, float brushSize)
     {
         brushSize = Mathf.Clamp(brushSize, 1f, 99f);
@@ -392,17 +392,11 @@ public static class DrawModulePressurePatch
 
 #endregion
 
-#region Reflection Cache (保持不变)
+#region Reflection Cache
 
-/// <summary>
-/// 反射缓存 - 提高反射调用性能
-/// </summary>
-/// <summary>
-/// 简化的反射缓存 - 只保留API未提供的功能
-/// </summary>
 internal static class ReflectionCache
 {
-    #region 仍需要的反射成员
+    #region 反射成员
 
     // UI相关的方法调用
     public static readonly MethodInfo meth_Hub_SetEraseButtons = AccessTools.Method(typeof(DrawingToolHub), "SetEraseButtons", new[] { typeof(bool) });
@@ -431,7 +425,7 @@ internal static class ReflectionCache
     {
         try
         {
-            // 只初始化仍需要的委托
+            
             if (prop_SelectedLayer != null)
             {
                 var setter = prop_SelectedLayer.GetSetMethod(true);
@@ -450,9 +444,9 @@ internal static class ReflectionCache
 
     #region 简化的访问方法
 
-    /// <summary>
+    
     /// 设置选中的图层（如果API没有提供）
-    /// </summary>
+    
     public static void SetSelectedLayer(DrawModule dm, int layer)
     {
         if (dm == null) return;
@@ -470,9 +464,9 @@ internal static class ReflectionCache
         }
     }
 
-    /// <summary>
+    
     /// 调用设置橡皮擦按钮方法
-    /// </summary>
+    
     public static void InvokeSetEraseButtons(object hub, bool value)
     {
         if (hub == null || meth_Hub_SetEraseButtons == null) return;
@@ -487,9 +481,9 @@ internal static class ReflectionCache
         }
     }
 
-    /// <summary>
+    
     /// 调用设置撤销按钮方法
-    /// </summary>
+    
     public static void InvokeSetUndoButtons(object hub)
     {
         if (hub == null || meth_Hub_SetUndoButtons == null) return;
@@ -504,9 +498,9 @@ internal static class ReflectionCache
         }
     }
 
-    /// <summary>
+    
     /// 设置正在绘制的形状
-    /// </summary>
+    
     public static void SetShapeInProgress(DrawModule drawModule, DrawableShape shape)
     {
         if (drawModule == null || fld_ShapeInProgress == null) return;
@@ -521,9 +515,9 @@ internal static class ReflectionCache
         }
     }
 
-    /// <summary>
+    
     /// 设置正在绘制的线条
-    /// </summary>
+    
     public static void SetLineInProgress(DrawModule drawModule, DrawableLine line)
     {
         if (drawModule == null || fld_LineInProgress == null) return;
@@ -545,9 +539,9 @@ internal static class ReflectionCache
 
 #region DrawModule Extensions (保持不变)
 
-/// <summary>
-/// 多元素撤销操作
-/// </summary>
+
+/// 撤销操作
+
 public class UndoMultiDrawElement : IUndo
 {
     private readonly List<DrawableElement> _elements;
@@ -589,39 +583,29 @@ public class UndoMultiDrawElement : IUndo
     }
 }
 
-/// <summary>
+
 /// DrawModule 扩展方法
-/// </summary>
+
 public static class DrawModuleExtensions
 {
-    /// <summary>
     /// 获取本地 Playfab ID
-    /// </summary>
     public static string GetLocalPlayfabId(this DrawModule dm)
     {
         return DrawModuleReflection.GetLocalPlayfabId(dm);
     }
 
-    /// <summary>
-    /// 发送精确删除消息
-    /// </summary>
+    
     public static void SendDeletePrecise(this DrawModule dm, int ident)
     {
         var method = AccessTools.Method(typeof(DrawModule), "OnSendDeletePrecise");
         method?.Invoke(dm, new object[] { ident });
     }
 
-    /// <summary>
-    /// 创建多元素撤销操作
-    /// </summary>
     public static IUndo CreateUndoMultiDrawElement(this DrawModule dm, IEnumerable<DrawableElement> elements)
     {
         return new UndoMultiDrawElement(elements, dm);
     }
 
-    /// <summary>
-    /// 获取所有绘图元素
-    /// </summary>
     public static List<DrawableElement> GetAllDrawables(this DrawModule dm)
     {
         if (dm == null) return new List<DrawableElement>();
@@ -649,7 +633,6 @@ public class MyMod : BaseUnityPlugin
     private void Awake()
 {
     ModLogger = Logger;
-    Logger.LogInfo("图层与压感补丁插件加载中...");
 
     // 应用Hook补丁
     ApplyHooks();
@@ -660,19 +643,15 @@ public class MyMod : BaseUnityPlugin
     CreateOrFindDrawLayerGUI();
     var harmony = new Harmony("com.hjjs.LayersAndPressure");
     harmony.PatchAll(Assembly.GetExecutingAssembly());
-    Logger.LogInfo("图层与压感补丁插件加载完成");
 }
 
 
     private void ApplyHooks()
     {
-        Logger.LogInfo("应用Hook补丁...");
 
         try
         {
-            // 修复：跳过PaletteManager补丁，因为它可能有复杂的out参数处理
-            // 如果确实需要这个补丁，可以稍后单独处理
-            Logger.LogInfo("跳过PaletteManager补丁（out参数处理复杂）");
+
 
             // DrawModule补丁
             new Hook(
@@ -695,11 +674,9 @@ public class MyMod : BaseUnityPlugin
                 typeof(MyMod).GetMethod(nameof(DrawModule_OnFinishDrawingCurrent_Hook), BindingFlags.NonPublic | BindingFlags.Static)
             );
 
-            Logger.LogInfo("Hook补丁应用完成");
         }
         catch (Exception ex)
         {
-            Logger.LogError($"应用Hook补丁时发生错误: {ex}");
         }
     }
 

@@ -9,7 +9,7 @@ public class Mathf_Clamp_Patch
 {
     static bool Prefix(ref int __result, int value, int min, int max)
     {
-        // 检查是否是笔刷大小的限制
+        
         if ((min == 2 && max == 35) || (min == 2 && max == 28))
         {
             __result = Mathf.Clamp(value, 1, 199);
